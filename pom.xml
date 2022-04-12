@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tn.esprit.spring</groupId>
-	<artifactId>tp1-spring-boot</artifactId>
+	<artifactId>dari-spring-boot</artifactId>
 	<version>1.0</version>
-	<name>tp1-spring-boot</name>
-	<description>tp1-spring-boot</description>
+	<name>dari-spring-boot</name>
+	<description>dari-spring-boot</description>
 	<properties>
 		<java.version>1.8</java.version>
 	</properties>
@@ -56,21 +56,7 @@
 			<artifactId>springfox-boot-starter </artifactId>
 			<version>3.0.0 </version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
 		
-		<dependency>
-			<groupId>com.auth0</groupId>
-			<artifactId>java-jwt</artifactId>
-			<version>3.18.1</version>
-		</dependency>
 	</dependencies>
 
 
