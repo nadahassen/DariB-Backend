@@ -28,11 +28,6 @@ public class HomeController {
     @Autowired
     private UserServiceImpl userService;
 
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to Daily Code Buffer!!";
-    }
-
     @PostMapping("/authenticate")
     public JwtResponse authenticate(@RequestBody JwtRequest jwtRequest) throws Exception{
 
