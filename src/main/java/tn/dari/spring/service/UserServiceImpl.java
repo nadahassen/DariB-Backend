@@ -24,32 +24,32 @@ import tn.dari.spring.repository.UserRepository;
 @Transactional
 @Slf4j
 
-//public class UserServiceImpl implements UserService, UserDetailsService {
-	public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
+//	public class UserServiceImpl implements UserService {
 
 	private final UserRepository userRepo;
 	private final RoleRepository roleRepo;
 	private final PasswordEncoder passwordEncoder;
 
-//	@Override
-//	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//		// TODO Auto-generated method stub
-//		User user = userRepo.findByUsername(username);
-//		if (user == null) {
-//			log.error("user not found in the database");
-//			throw new UsernameNotFoundException("user not found");
-//
-//		} else {
-//			log.info("user {} found in the database", username);
-//		}
-//		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-//		user.getRoles().forEach(role -> {
-//			authorities.add(new SimpleGrantedAuthority(role.getName()));
-//		});
-//		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-//				authorities);
-//
-//	}
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		// TODO Auto-generated method stub
+		User user = userRepo.findByUsername(username);
+		if (user == null) {
+			log.error("user not found in the database");
+			throw new UsernameNotFoundException("user not found");
+
+		} else {
+			log.info("user {} found in the database", username);
+		}
+		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		user.getRoles().forEach(role -> {
+			authorities.add(new SimpleGrantedAuthority(role.getName()));
+		});
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				authorities);
+
+	}
 
 	@Override
 	public List<User> getUsers() {

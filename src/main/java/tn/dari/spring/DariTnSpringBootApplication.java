@@ -25,10 +25,10 @@ public class DariTnSpringBootApplication {
 		SpringApplication.run(DariTnSpringBootApplication.class, args);
 	}
 
-//	@Bean
-//	PasswordEncoder passwordEncoder() {
-//		return new BCryptPasswordEncoder();
-//	}
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
 	
 	
@@ -43,7 +43,7 @@ public class DariTnSpringBootApplication {
 //			userService.saveRole(new Role(null, "ROLE_BAILLEUR"));
 //			userService.saveRole(new Role(null, "ROLE_LOCATAIRE"));
 //
-//			userService.saveUser(new User(null, "hiba.farhat@espri.tn", "hiba1", "farhat1", "hiba-fh", "2000000", "1234",
+//			userService.saveUser(new User(null, "hib1.farhat@esprith.tn", "hiba12", "farhat1", "hibaF", "2000000", "root",
 //					new ArrayList<>()));
 //			userService.saveUser(new User(null, "test1.farhat@espri.tn", "hiba2", "farhat2", "username1", "2000000",
 //					"12354", new ArrayList<>()));
@@ -52,13 +52,13 @@ public class DariTnSpringBootApplication {
 //			userService.saveUser(new User(null, "test3.farhat@espri.tn", "hiba4", "farhat4", "username3", "2000000",
 //					"12344", new ArrayList<>()));
 //
-//			userService.addRoleToUser("username1", "ROLE_ADMIN");
+//			userService.addRoleToUser("hibaF", "ROLE_ADMIN");
 //
 //			userService.addRoleToUser("username1", "ROLE_ACHETEUR");
 //
 //			userService.addRoleToUser("hiba-fh", "ROLE_VENDEUR");
 //
-//		};
+//	};
 //	}
 //	
 	

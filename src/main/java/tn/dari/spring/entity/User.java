@@ -54,8 +54,17 @@ public class User implements UserDetails {
 	private String password;
 	
 
+     
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
+     
+
 	@ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
+	
+	
 	
 	@Override
 	public String getUsername() {
