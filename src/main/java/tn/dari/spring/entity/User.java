@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -59,7 +60,9 @@ public class User implements UserDetails {
         this.username = username;
         this.password = password;
     }
-     
+    
+   
+    
 
 	@ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles = new ArrayList<>();
@@ -105,4 +108,6 @@ public class User implements UserDetails {
 		// TODO Auto-generated method stub
 		return true;
 	}
+	
+	
 }
