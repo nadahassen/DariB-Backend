@@ -36,5 +36,6 @@ public class likeAnnonce  implements Serializable{
 	@NonNull typeLike typeLike;
 	@ManyToOne(cascade = CascadeType.ALL)
 	Annonce Annonce;
-	
+	@ManyToOne(cascade = CascadeType.ALL)
+	User User;
 }

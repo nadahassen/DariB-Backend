@@ -36,6 +36,8 @@ public class CommentAnnonce  implements Serializable  {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	Annonce Annonce;
+	@ManyToOne(cascade = CascadeType.ALL)
+	User User;
 	
 
 }

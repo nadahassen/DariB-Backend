@@ -17,6 +17,9 @@ import javax.persistence.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -61,7 +64,16 @@ public class User implements UserDetails {
         this.password = password;
     }
     
-   
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    @JsonIgnore
+    private Set<likeAnnonce> likes;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    @JsonIgnore
+    private Set<CommentAnnonce> comments;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    @JsonIgnore
+    private Set<SignalerAnnonce> signaux;
     
 
 	@ManyToMany(fetch = FetchType.EAGER)

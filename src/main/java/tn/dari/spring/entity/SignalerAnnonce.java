@@ -36,5 +36,7 @@ public class SignalerAnnonce implements Serializable{
 	@NonNull Date dateCreation ;
 	@ManyToOne(cascade = CascadeType.ALL)
 	Annonce Annonce;
+	@ManyToOne(cascade = CascadeType.ALL)
+	User User;
 
 }

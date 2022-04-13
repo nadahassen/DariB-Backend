@@ -71,5 +71,6 @@ public class Annonce implements Serializable  {
      private Set<likeAnnonce> likes;
     
     
-
+     @ManyToOne(cascade = CascadeType.ALL)
+ 	User User;
 }
