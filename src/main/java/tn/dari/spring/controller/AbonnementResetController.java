@@ -27,7 +27,7 @@ public class AbonnementResetController {
 	
 	//URL : http://localhost:8081/DariTn/Abonnement/retrieve-all-Abonnement
 	@GetMapping("/retrieve-all-Abonnement")
-	public List<Abonnement> retrieveAllFactures() {
+	public List<Abonnement> retrieveAllAbonnements() {
 		List<Abonnement> list = AbonnementService.retrieveAllAbonnement();
 		return list;
 	}
