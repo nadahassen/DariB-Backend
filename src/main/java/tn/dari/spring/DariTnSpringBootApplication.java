@@ -1,6 +1,7 @@
 package tn.dari.spring;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -29,9 +30,7 @@ public class DariTnSpringBootApplication {
 	PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-	
-	
-	
+
 //	@Bean
 //	CommandLineRunner run(UserService userService) {
 //		return arg -> {
@@ -43,25 +42,31 @@ public class DariTnSpringBootApplication {
 //			userService.saveRole(new Role(null, "ROLE_BAILLEUR"));
 //			userService.saveRole(new Role(null, "ROLE_LOCATAIRE"));
 //
-//			userService.saveUser(new User(null, "hib1.farhat@esprith.tn", "hiba12", "farhat1", "hibaF", "2000000", "root",
-//					new ArrayList<>()));
-//			userService.saveUser(new User(null, "test1.farhat@espri.tn", "hiba2", "farhat2", "username1", "2000000",
-//					"12354", new ArrayList<>()));
-//			userService.saveUser(new User(null, "test2.farhat@espri.tn", "hiba3", "farhat3", "username2", "2000000",
-//					"12346", new ArrayList<>()));
-//			userService.saveUser(new User(null, "test3.farhat@espri.tn", "hiba4", "farhat4", "username3", "2000000",
-//					"12344", new ArrayList<>()));
+//			userService.saveUser(new User("hiba", "farhat", "hiba-fh", "hiba-farhat@esprit.tn", "000000", null, "root",
+//					"ariana", false, new ArrayList<>()));
 //
-//			userService.addRoleToUser("hibaF", "ROLE_ADMIN");
+//			userService.saveUser(new User("rihab", "haddad", "rihab-ha", "rihab.haddad@esprit.tn", "000000", null,
+//					"root", "ariana", false, new ArrayList<>()));
+//			userService.saveUser(new User("cyrine", "belguith", "cyrine-bl", "cyrine.bel@esprit.tn", "000000", null,
+//					"root", "ariana", false, new ArrayList<>()));
+//			userService.saveUser(new User("siwar", "benkraiem", "siwar-bk", "siwar-benkraiem@esprit.tn", "000000", null,
+//					"root", "ariana", false, new ArrayList<>()));
+//			userService.saveUser(new User("syrine", "benhassine", "syrine-bh", "syrine-bh@esprit.tn", "000000", null,
+//					"root", "ariana", false, new ArrayList<>()));
+//			userService.saveUser(new User("nada", "hassan", "nada-hs", "nada.hassen@esprit.tn", "000000", null, "root",
+//					"ariana", false, new ArrayList<>()));
 //
-//			userService.addRoleToUser("username1", "ROLE_ACHETEUR");
+//			userService.addRoleToUser("hiba-fh", "ROLE_ADMIN");
+//
+//			userService.addRoleToUser("rihab-ha", "ROLE_ACHETEUR");
 //
 //			userService.addRoleToUser("hiba-fh", "ROLE_VENDEUR");
+//			userService.addRoleToUser("cyrine-bl", "ROLE_VENDEUR");
+//			userService.addRoleToUser("siwar-bk", "ROLE_VENDEUR");
+//			userService.addRoleToUser("nada-hs", "ROLE_LOCATAIRE");
+//			userService.addRoleToUser("syrine-bh", "ROLE_LOCATAIRE");
 //
-//	};
+//		};
 //	}
-//	
-	
-	
 
 }
