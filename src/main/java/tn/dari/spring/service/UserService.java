@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import tn.dari.spring.entity.ERole;
 import tn.dari.spring.entity.Role;
 import tn.dari.spring.entity.User;
 
@@ -30,5 +31,7 @@ public interface UserService {
 	void deleteRole(Long id);
 
 	List<Role> getRoles();
+
+	void addRoleToUser(String username, ERole roleName);
 
 }

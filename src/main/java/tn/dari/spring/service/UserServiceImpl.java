@@ -6,6 +6,7 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import javax.servlet.ServletContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.dari.spring.entity.ERole;
 import tn.dari.spring.entity.Role;
 import tn.dari.spring.entity.User;
 import tn.dari.spring.repository.RoleRepository;
@@ -46,7 +48,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		}
 		Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
 		user.getRoles().forEach(role -> {
-			authorities.add(new SimpleGrantedAuthority(role.getName()));
+			authorities.add(new SimpleGrantedAuthority(role.getName().name()));
 		});
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 				authorities);
@@ -72,7 +74,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	}
 
 	@Override
-	public void addRoleToUser(String username, String roleName) {
+	public void addRoleToUser(String username, ERole roleName) {
 		log.info("adding role {} to user {}", roleName, username);
 		User user = userRepo.findByUsername(username);
 		Role role = roleRepo.findByName(roleName);
@@ -94,14 +96,14 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		return userRepo.save(user);
 	}
 
-	@Override
-	public void lockUser(Long id, boolean status) {
-		// TODO Auto-generated method stub
-		User user = userRepo.findById(id).get();
-		user.setAccountNonLocked(status);
-		;
-		userRepo.save(user);
-	}
+//	@Override
+//	public void lockUser(Long id, boolean status) {
+//		// TODO Auto-generated method stub
+//		User user = userRepo.findById(id).get();
+//		user.setAccountNonLocked(status);
+//		;
+//		userRepo.save(user);
+//	}
 
 	@Override
 	public Role updateRole(Role role, Long id) {
@@ -116,9 +118,21 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	@Override
 	public User saveUser(User user) {
-		log.info("saving new user {} to the database", user.getNom());
+		log.info("saving new user {} to the database", user.getUsername());
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		return userRepo.save(user);
+	}
+
+	@Override
+	public void lockUser(Long id, boolean status) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addRoleToUser(String username, String roleName) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

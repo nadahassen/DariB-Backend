@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -20,16 +21,18 @@ import tn.dari.spring.service.UserService;
 @SpringBootApplication
 @EnableScheduling
 @EnableWebMvc
+@Configuration
+
 public class DariTnSpringBootApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DariTnSpringBootApplication.class, args);
 	}
 
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	PasswordEncoder passwordEncoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 
 //	@Bean
 //	CommandLineRunner run(UserService userService) {
