@@ -1,6 +1,5 @@
 package tn.dari.spring.entity;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,11 +11,8 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-@Table(	name = "users", 
-		uniqueConstraints = { 
-			@UniqueConstraint(columnNames = "username"),
-			@UniqueConstraint(columnNames = "email") 
-		})
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+		@UniqueConstraint(columnNames = "email") })
 public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,15 +30,18 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
-	
+
 	private boolean accountVerified;
 
 	@ManyToMany(fetch = FetchType.LAZY)
-    @JsonIgnore
-	@JoinTable(	name = "user_roles", 
-				joinColumns = @JoinColumn(name = "user_id"), 
-				inverseJoinColumns = @JoinColumn(name = "role_id"))
+	@JsonIgnore
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
+
+	@Column(name = "verification_code", length = 64)
+	private String verificationCode;
+
+	private boolean enabled;
 
 	public User() {
 	}
@@ -92,8 +91,17 @@ public class User {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
+
 	public boolean isAccountVerified() {
 		return accountVerified;
 	}
-	
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
 }
