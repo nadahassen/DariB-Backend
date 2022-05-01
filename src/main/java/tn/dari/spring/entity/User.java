@@ -64,14 +64,19 @@ public class User implements UserDetails {
         this.password = password;
     }
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
+    @JsonIgnore
+    private Set<Annonce> annonces;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     @JsonIgnore
     private Set<likeAnnonce> likes;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     @JsonIgnore
     private Set<CommentAnnonce> comments;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="User")
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
     @JsonIgnore
     private Set<SignalerAnnonce> signaux;
     

@@ -5,8 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import tn.dari.spring.entity.SignalerAnnonce;
 
-
 @Repository
-public interface SignalerAnnonceRepository extends CrudRepository<SignalerAnnonce,Long> {
+public interface SignalerAnnonceRepository extends CrudRepository<SignalerAnnonce,Long> ,SignalerAnnonceRepositoryCustom  {
 
 }

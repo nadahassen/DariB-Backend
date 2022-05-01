@@ -10,5 +10,6 @@ public interface SignalerAnnonceService {
 	SignalerAnnonce addSignalerAnnonce(SignalerAnnonce s);
 
 	void deleteSignalerAnnonce(Long id);
+	List<SignalerAnnonce> getSignauxByAnnonceId(Long annonceId);
 
 }

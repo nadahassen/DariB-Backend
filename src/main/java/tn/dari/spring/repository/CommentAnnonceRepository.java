@@ -5,7 +5,8 @@ import org.springframework.stereotype.Repository;
 
 import tn.dari.spring.entity.CommentAnnonce;
 
-@Repository
-public interface CommentAnnonceRepository extends CrudRepository<CommentAnnonce,Long> {
 
+@Repository
+public interface CommentAnnonceRepository extends CrudRepository<CommentAnnonce, Long>, CommentAnnonceRepositoryCustom {
+	
 }

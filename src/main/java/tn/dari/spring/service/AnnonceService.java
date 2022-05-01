@@ -11,6 +11,6 @@ public interface AnnonceService {
 	Annonce addAnnonce(Annonce annonce);
 	Annonce UpdateAnnonce(Annonce annonce);
 	void deleteAnnonce(Long id);
-	Annonce retrievesAnnonce(Long id);
+	Annonce retrieveAnnonceById(Long id);
 
 }

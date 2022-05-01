@@ -11,6 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -21,21 +24,84 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@EqualsAndHashCode
+
 public class likeAnnonce  implements Serializable{
 
 	@Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-	 private Long IdLike ;
-	@NonNull Date DateCreation;
-	@NonNull typeLike typeLike;
-	@ManyToOne(cascade = CascadeType.ALL)
-	Annonce Annonce;
-	@ManyToOne(cascade = CascadeType.ALL)
-	User User;
+	private Long idLike ;
+	private Date dateCreation;
+	private typeLike typeLike;
+	@ManyToOne
+	@JsonIgnore
+	private Annonce annonce;
+	@Transient    
+	private Long idAnnonce ;
+	
+	@ManyToOne
+	@JsonIgnore
+	private User user;
+	@Transient    
+	private Long idUser;
+	
+	
+	
+	
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	public Long getIdUser() {
+		return idUser;
+	}
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
+	}
+	public Long getIdLike() {
+		return idLike;
+	}
+	public void setIdLike(Long idLike) {
+		this.idLike = idLike;
+	}
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+	public typeLike getTypeLike() {
+		return typeLike;
+	}
+	public void setTypeLike(typeLike typeLike) {
+		this.typeLike = typeLike;
+	}
+	public Annonce getAnnonce() {
+		return annonce;
+	}
+	public void setAnnonce(Annonce annonce) {
+		this.annonce = annonce;
+	}
+	public Long getIdAnnonce() {
+		return idAnnonce;
+	}
+	public void setIdAnnonce(Long idAnnonce) {
+		this.idAnnonce = idAnnonce;
+	}
+	@Override
+	public String toString() {
+		return "likeAnnonce [idLike=" + idLike + ", dateCreation=" + dateCreation + ", typeLike=" + typeLike
+				+ ", annonce=" + annonce + ", idAnnonce=" + idAnnonce + "]";
+	}
+	public likeAnnonce(Long idLike, Date dateCreation,typeLike typeLike, Annonce annonce,
+			Long idAnnonce) {
+		
+		this.idLike = idLike;
+		this.dateCreation = dateCreation;
+		this.typeLike = typeLike;
+		this.annonce = annonce;
+		this.idAnnonce = idAnnonce;
+	}
+	
 }

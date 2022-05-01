@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 import tn.dari.spring.entity.SignalerAnnonce;
 import tn.dari.spring.repository.SignalerAnnonceRepository;
-
 @Service
 public class SignalerAnnonceServiceImpl implements SignalerAnnonceService {
 	@Autowired
 	SignalerAnnonceRepository SignalerAnnonceRepository;
+	
 	
 
 	@Override
@@ -28,6 +28,12 @@ public class SignalerAnnonceServiceImpl implements SignalerAnnonceService {
 	public void deleteSignalerAnnonce(Long id) {
 		SignalerAnnonceRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public List<SignalerAnnonce> getSignauxByAnnonceId(Long annonceId) {
+		return (List<SignalerAnnonce>)SignalerAnnonceRepository.getSignauxByAnnonceId(annonceId) ;
+
 	}
 
 }

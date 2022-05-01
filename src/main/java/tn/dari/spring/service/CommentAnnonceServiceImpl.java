@@ -13,15 +13,21 @@ public class CommentAnnonceServiceImpl  implements  CommentAnnonceService {
 	@Autowired
  CommentAnnonceRepository CommentAnnonceRepository;
 	@Override
-	public List<CommentAnnonce> retrieveAllCommentAnnonce() {
+	public List<CommentAnnonce> getCommentsByAnnonceId(Long annonceId) {
 
-		return (List<CommentAnnonce>)CommentAnnonceRepository .findAll() ;
+		return (List<CommentAnnonce>)CommentAnnonceRepository.getCommentsByAnnonceId(annonceId) ;
 	}
 
 	@Override
 	public CommentAnnonce addCommentAnnonce(CommentAnnonce c) {
 		return CommentAnnonceRepository.save(c);
 	}
+	
+	@Override
+	public CommentAnnonce updateCommentAnnonce(CommentAnnonce c) {
+		return CommentAnnonceRepository.save(c);
+	}
+	
 
 	@Override
 	public void deleteCommentAnnonce(Long id) {

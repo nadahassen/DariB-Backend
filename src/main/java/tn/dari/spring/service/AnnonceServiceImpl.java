@@ -39,9 +39,12 @@ public class AnnonceServiceImpl implements AnnonceService {
 	}
 
 	@Override
-	public Annonce retrievesAnnonce(Long id) {
+	public Annonce retrieveAnnonceById(Long id) {
 		Annonce a = AnnonceRepository.findById(id).get();
 		return a;
+	}
+
+	
 	}
 
 	
@@ -50,4 +53,4 @@ public class AnnonceServiceImpl implements AnnonceService {
 		
 	
 
-}
+

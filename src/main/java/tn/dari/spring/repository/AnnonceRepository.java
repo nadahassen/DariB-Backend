@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import tn.dari.spring.entity.Annonce;
 
 
-@Repository 
-public interface AnnonceRepository   extends CrudRepository<Annonce,Long> {
+@Repository
+public interface AnnonceRepository extends CrudRepository<Annonce, Long> {
 
 }

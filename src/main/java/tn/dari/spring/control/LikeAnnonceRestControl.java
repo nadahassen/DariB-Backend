@@ -12,18 +12,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import tn.dari.spring.service.LikeAnnonceService;
+import tn.dari.spring.entity.Annonce;
 import tn.dari.spring.entity.likeAnnonce;
+import tn.dari.spring.service.AnnonceService;
+import tn.dari.spring.service.LikeAnnonceService;
+
 
 @RestController
 @RequestMapping("/LikeAnnonce")
 public class LikeAnnonceRestControl {
 	@Autowired
 	LikeAnnonceService LikeAnnonceService;
+	@Autowired
+	AnnonceService annonceService;
 	
 	// URL : http://Localhost:8081/SpringMVC/likeAnnonce/retrieve-All-likeAnnonce
 	   @GetMapping("/retrieve-All-LikeAnnonce")
- public List<likeAnnonce> retrieveAllProduits() {
+ public List<likeAnnonce> retrieveAllAnnonce() {
 		   List<likeAnnonce> List =LikeAnnonceService.retrieveAllLikeAnnonce();
 		   return List; 
 	   }
@@ -31,7 +36,9 @@ public class LikeAnnonceRestControl {
  // URL : http://Localhost:8081/SpringMVC/likeAnnonce/add-LikeAnnonce
  @PostMapping("/add-LikeAnnonce")
  @ResponseBody
- public likeAnnonce addAnnonce(@RequestBody likeAnnonce l) {
+ public likeAnnonce addLikeAnnonce(@RequestBody likeAnnonce l) {
+	 Annonce annonce= annonceService.retrieveAnnonceById(l.getIdAnnonce());
+	 l.setAnnonce(annonce);
 	   return LikeAnnonceService.addLikeAnnonce(l);}
  
 //URL : http://Localhost:8081/SpringMVC/likeAnnonce/delete-likeAnnonce/
