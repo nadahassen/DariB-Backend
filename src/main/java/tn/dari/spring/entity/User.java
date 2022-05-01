@@ -1,130 +1,117 @@
 package tn.dari.spring.entity;
 
-import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name="user")
-public class User implements UserDetails {
-	private static final long serialVersionUID = 1L;
+@Table(name = "users", uniqueConstraints = { @UniqueConstraint(columnNames = "username"),
+		@UniqueConstraint(columnNames = "email") })
+public class User {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name="email")
+	@NotBlank
+	@Size(max = 20)
+	@NotNull
+	String username;
+
+//	@NotBlank
+	@Size(max = 50)
+	@Email
+	@NotNull
 	private String email;
 
-	@Column(name="nom")
-	private String nom;
-	
-	@Column(name="prenom")
-	private String prenom;
-	
-	@Column(name="username")
-	private String username;
-	
-	@Column(name="tel")
-	private String tel;
-	
-
-	@Column(name="password")
+//	@NotBlank
+	@Size(max = 120)
+	@NotNull
 	private String password;
-	
 
-     
-    public User(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    @JsonIgnore
-    private Set<Annonce> annonces;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    @JsonIgnore
-    private Set<likeAnnonce> likes;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    @JsonIgnore
-    private Set<CommentAnnonce> comments;
-    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy="user")
-    @JsonIgnore
-    private Set<SignalerAnnonce> signaux;
-    
+//	@NotBlank
+	private String address;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-    private Collection<Role> roles = new ArrayList<>();
+//	@NotBlank
+	@Size(max = 50)
+	private String tel;
+//	@NotBlank
+	@Size(max = 50)
+	private String nom;
+//	@NotBlank
+	@Size(max = 50)
+	private String prenom;
+
+	private boolean accountVerified;
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JsonIgnore
+	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+	private Set<Role> roles = new HashSet<>();
+
+	@Column(name = "verification_code", length = 64)
+	private String verificationCode;
+
+	private boolean enabled;
+
+//	public User() {
+//	}
+
+//	public User(String username, String email, String password) {
+//		this.username = username;
+//		this.email = email;
+//		this.password = password;
+//	}
+
+//	public Set<Role> getRoles() {
+//		return roles;
+//	}
+//
+//	public void setRoles(Set<Role> roles) {
+//		this.roles = roles;
+//	}
+//
+//	public boolean isAccountVerified() {
+//		return accountVerified;
+//	}
+//
+//	public boolean isEnabled() {
+//		return enabled;
+//	}
+//
+//	public void setEnabled(boolean enabled) {
+//		this.enabled = enabled;
+//	}
+
+	public User(@Size(max = 20) String username, @Size(max = 50) @Email String email, @Size(max = 120) String password,
+			String address, @Size(max = 50) String tel, @Size(max = 50) String nom, @Size(max = 50) String prenom
+			) {
+		this.username = username;
+		this.email = email;
+		this.password = password;
+		this.address = address;
+		this.tel = tel;
+		this.nom = nom;
+		this.prenom = prenom;
 	
-	
-	
-	@Override
-	public String getUsername() {
-		return this.username;
 	}
 
-
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-	@Override
-	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-
-
-	@Override
-	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
-	}
-	
-	
 }

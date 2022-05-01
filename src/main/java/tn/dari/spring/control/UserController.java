@@ -2,8 +2,11 @@ package tn.dari.spring.control;
 
 import java.util.List;
 
+import javax.servlet.ServletContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,21 +14,28 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import tn.dari.spring.entity.Role;
+import lombok.extern.slf4j.Slf4j;
 import tn.dari.spring.entity.User;
+import tn.dari.spring.repository.UserRepository;
 import tn.dari.spring.service.UserService;
 
+@Slf4j
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
+@CrossOrigin(origins ="*")
 public class UserController {
 
 	@Autowired
 	UserService userService;
+	@Autowired
+	UserRepository userRepo;
 
 	// URL : http://localhost:8081/SpringMVC/User/retrieve-All-Users
 	@GetMapping("/allUsers")
@@ -40,12 +50,6 @@ public class UserController {
 		return userService.saveUser(user);
 	}
 
-	// URL : http://localhost:8081/SpringMVC/User/add-User
-	@PostMapping("/addRole")
-	public Role addRole(@RequestBody Role R) {
-		return userService.saveRole(R);
-	}
-
 	@PostMapping("/role/addToUser")
 	public ResponseEntity<?> addRoleToUser(@RequestBody RoleToUserForm form) {
 		userService.addRoleToUser(form.getUsername(), form.getRoleName());
@@ -53,13 +57,17 @@ public class UserController {
 
 	}
 
-
-
 	// URL : http://Localhost:8081/SpringMVC/User/modify-User/{id}
-	@PutMapping("/modifUser/{id}")
-	public User updateUser(@RequestBody User p, @PathVariable("id") Long id) {
+	@PutMapping("/modifUser")
+	public User updateUser(@RequestBody User p) {
 
-		return userService.updateUser(p, id);
+		return userService.updateUser(p);
+	}
+
+	@PutMapping("/lockUser/{id}/{status}")
+	public void lockUser( @PathVariable("id") Long id,@PathVariable("status") boolean status) {
+
+		 userService.lockUser(id,status);
 	}
 
 	// URL : http://Localhost:8081/SpringMVC/User/delete-User/
@@ -67,6 +75,14 @@ public class UserController {
 	public void DeleteUser(@PathVariable("id") Long id) {
 		userService.deleteUser(id);
 	}
+
+	// URL : http://localhost:8081/SpringMVC/User/add-User
+	@PostMapping("/addUserImage")
+	public User addUserWithImage(@RequestBody User user) {
+		
+		return userService.saveUser(user);
+	}
+
 
 
 }
