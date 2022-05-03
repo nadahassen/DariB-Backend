@@ -8,6 +8,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private AuthEntryPointJwt unauthorizedHandler;
 
+	
 	@Bean
 	public AuthTokenFilter authenticationJwtTokenFilter() {
 		return new AuthTokenFilter();
@@ -52,26 +54,71 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	 @Override
+	    public void configure(WebSecurity web) {
+	        web.ignoring().antMatchers("/v2/api-docs","/v3/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**",
+	                "/swagger-ui.html", "/webjars/**");
+	    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-//		http.cors().and().csrf().disable()
-//			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-//			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//			.authorizeRequests().antMatchers("/api/auth/**","/send","/swagger-ui/**","/chat-websocket/**","/api/auth/**",
-//					"/chat","/profile","/chat/message").permitAll()
-//			.antMatchers("/api/test/**","/swagger-ui/**","/chat-websocket/**","/chat","/profile","/chat/message").permitAll()
-//			.anyRequest().authenticated();
-//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//	@Override
+//	protected void configure(HttpSecurity http) throws Exception {
+////		http.cors().and().csrf().disable()
+////			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+////			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+////			.authorizeRequests().antMatchers("/api/auth/**","/send","/swagger-ui/**","/chat-websocket/**","/api/auth/**",
+////					"/chat","/profile","/chat/message").permitAll()
+////			.antMatchers("/api/test/**","/swagger-ui/**","/chat-websocket/**","/chat","/profile","/chat/message").permitAll()
+////			.anyRequest().authenticated();
+////		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+////		
 //		
-		
-		http.csrf().disable();
-		http.authorizeRequests()
-//		.antMatchers("/").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_ACHETEUR", "ROLE_VENDEUR","ROLE_BAILLEUR","ROLE_LOCATAIRE")
-//        .antMatchers("/user/allUsers").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_ACHETEUR", "ROLE_VENDEUR","ROLE_BAILLEUR","ROLE_LOCATAIRE")
-        .anyRequest().permitAll();
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//		http.csrf().disable();
+//		http.authorizeRequests()
+//	.antMatchers("/admin/**").hasRole("ADMIN")
+//	
+//	.antMatchers("/","/home","/profile").permitAll();
+//	//        .antMatchers("/user/allUsers").hasAnyAuthority("ROLE_USER", "ROLE_ADMIN", "ROLE_ACHETEUR", "ROLE_VENDEUR","ROLE_BAILLEUR","ROLE_LOCATAIRE")
+////        .anyRequest().permitAll();
+//		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+//		http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+//
+//	}
+	
 
-	}
+
+   
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.cors()
+                .and()
+                .csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authorizeRequests()
+                .antMatchers("/","/file/**","file/**",
+                		"/favicon.ico",
+                        "/**/*.json",
+                        "/**/*.xml",
+                        "/**/*.properties",
+                        "/**/*.woff2",
+                        "/**/*.woff",
+                        "/**/*.ttf",
+                        "/**/*.ttc",
+                        "/**/*.ico",
+                        "/**/*.bmp",
+                        "/**/*.png",
+                        "/**/*.gif",
+                        "/**/*.svg",
+                        "/**/*.jpg",
+                        "/**/*.jpeg",
+                        "/**/*.html",
+                        "/**/*.css",
+                        "/**/*.js").permitAll()
+                .antMatchers("/**/api/auth/**","/**/user/**","/user/checkEmail","/user/allUsers","/api/auth/**","/user/**").permitAll()
+                .anyRequest().authenticated();
+
+        http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+    }
 }

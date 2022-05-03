@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import tn.dari.spring.entity.Code;
 import tn.dari.spring.entity.ERole;
 import tn.dari.spring.entity.Role;
 import tn.dari.spring.entity.User;
@@ -17,6 +18,9 @@ public interface UserService {
 	Role saveRole(Role role);
 
 	void addRoleToUser(String username, String roleName);
+	void addCodeToUser(String code,String username);
+	public Code saveCode(Code code);
+
 
 	void deleteUser(Long id);
 
@@ -34,4 +38,7 @@ public interface UserService {
 
 	void addRoleToUser(String username, ERole roleName);
 
+	boolean ifEmailExist(String email);
+
+	User getUserByMail(String mail);
 }

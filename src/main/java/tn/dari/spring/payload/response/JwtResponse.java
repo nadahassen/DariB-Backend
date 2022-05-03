@@ -2,6 +2,10 @@ package tn.dari.spring.payload.response;
 
 import java.util.List;
 
+import lombok.Data;
+import lombok.Getter;
+@Data
+
 public class JwtResponse {
 	private String token;
 	private String type = "Bearer";

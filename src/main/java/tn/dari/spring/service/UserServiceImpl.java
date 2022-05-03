@@ -18,9 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.dari.spring.entity.Code;
 import tn.dari.spring.entity.ERole;
 import tn.dari.spring.entity.Role;
 import tn.dari.spring.entity.User;
+import tn.dari.spring.repository.CodeRepository;
 import tn.dari.spring.repository.RoleRepository;
 import tn.dari.spring.repository.UserRepository;
 
@@ -34,6 +36,8 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
 	private final UserRepository userRepo;
 	private final RoleRepository roleRepo;
+	private final CodeRepository codeRepo;
+
 	private final PasswordEncoder passwordEncoder;
 
 	@Override
@@ -71,6 +75,11 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	public Role saveRole(Role role) {
 		log.info("saving new role {} to the database", role.getName());
 		return roleRepo.save(role);
+	}
+	@Override
+	public Code saveCode(Code code) {
+		log.info("saving new code {} to the database", code.getCode());
+		return codeRepo.save(code);
 	}
 
 	@Override
@@ -134,5 +143,27 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	 public boolean ifEmailExist(String email){
+	        return userRepo.existsByEmail(email);
+	    }
+@Override
+    public User getUserByMail(String mail){
+        return this.userRepo.findByEmail(mail);
+    }
+
+@Override
+public void addCodeToUser(String code, String username) {
+	log.info("adding code {} to user {}", code, username);
+	User user = userRepo.findByUsername(username);
+	Code code2 = codeRepo.findByCode(code);
+	code2.setUser(user);
+	codeRepo.save(code2);
+	log.info("code2 " + code2.toString());
+
+	user.setCode(code2);
+}
+
+
 
 }

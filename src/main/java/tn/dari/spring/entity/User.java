@@ -32,12 +32,12 @@ public class User {
 	private Long id;
 
 	@NotBlank
-	@Size(max = 20)
+	@Size(max = 50)
 	@NotNull
 	String username;
 
 //	@NotBlank
-	@Size(max = 50)
+	@Size(max = 80)
 	@Email
 	@NotNull
 	private String email;
@@ -48,9 +48,12 @@ public class User {
 	private String password;
 
 //	@NotBlank
+	@Column(columnDefinition=" DEFAULT 'inconnue'")
 	private String address;
 
 //	@NotBlank
+	@Column(columnDefinition=" DEFAULT 'inconnue'")
+
 	@Size(max = 50)
 	private String tel;
 //	@NotBlank
@@ -60,15 +63,17 @@ public class User {
 	@Size(max = 50)
 	private String prenom;
 
-	private boolean accountVerified;
+	private int accountVerified;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JsonIgnore
 	@JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
 	private Set<Role> roles = new HashSet<>();
 
-	@Column(name = "verification_code", length = 64)
-	private String verificationCode;
+	
+	  @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	    @JoinColumn(name = "code_id")
+	    private Code code;
 
 	private boolean enabled;
 
@@ -101,7 +106,7 @@ public class User {
 //		this.enabled = enabled;
 //	}
 
-	public User(@Size(max = 20) String username, @Size(max = 50) @Email String email, @Size(max = 120) String password,
+	public User(@Size(max = 80) String username, @Size(max = 50) @Email String email, @Size(max = 120) String password,
 			String address, @Size(max = 50) String tel, @Size(max = 50) String nom, @Size(max = 50) String prenom
 			) {
 		this.username = username;

@@ -20,6 +20,7 @@ public class UserDetailsImpl implements UserDetails {
 	private String email;
 	@JsonIgnore
 	private String password;
+	
 	private Collection<? extends GrantedAuthority> authorities;
 	public UserDetailsImpl(Long id, String username, String email, String password,
 			Collection<? extends GrantedAuthority> authorities) {
@@ -44,7 +45,7 @@ public class UserDetailsImpl implements UserDetails {
 	
 	
 	
-
+User user;
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return authorities;
@@ -77,6 +78,7 @@ public class UserDetailsImpl implements UserDetails {
 	}
 	@Override
 	public boolean isEnabled() {
+//		return  user.getAccountVerified()==1;
 		return true;
 	}
 	@Override
