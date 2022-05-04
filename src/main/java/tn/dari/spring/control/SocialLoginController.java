@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.User;
 import org.springframework.social.facebook.api.impl.FacebookTemplate;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +37,7 @@ import tn.dari.spring.service.UserService;
 @RestController
 @Slf4j
 @RequestMapping("/api/auth")
-
+@CrossOrigin(origins = "http://localhost:4200")
 public class SocialLoginController {
 
 	@Autowired
@@ -51,6 +52,9 @@ public class SocialLoginController {
 	@Value("${google.id}")
 	private String idClient;
 	
+	 @Value("${secretPsw}")
+	    String secretPsw;
+	
 	int n = 5;
 
 
@@ -61,8 +65,8 @@ public class SocialLoginController {
 		JacksonFactory factory = JacksonFactory.getDefaultInstance();
 		GoogleIdTokenVerifier.Builder ver = new GoogleIdTokenVerifier.Builder(transport, factory)
 				.setAudience(Collections.singleton(idClient));
-		log.info("tolee" + tokenDto.getToken());
-		GoogleIdToken googleIdToken = GoogleIdToken.parse(ver.getJsonFactory(), tokenDto.getToken());
+		log.info("googleIdTokeen" + tokenDto.getValue());
+		GoogleIdToken googleIdToken = GoogleIdToken.parse(ver.getJsonFactory(), tokenDto.getValue());
 		GoogleIdToken.Payload payload = googleIdToken.getPayload();
 		String username = payload.get("given_name").toString().concat("-").concat(payload.get("given_name").toString()).concat(getAlphaNumericString(n));
 		String firstName = payload.get("given_name").toString();
@@ -71,6 +75,8 @@ public class SocialLoginController {
 
 		return login(payload.getEmail(), username,firstName,lastName);
 	}
+	
+	
 
 
 	static String getAlphaNumericString(int n) {
@@ -94,7 +100,7 @@ public class SocialLoginController {
 //    
 	@PostMapping("/facebook")
 	public LoginResponse loginWithFacebook(@RequestBody TokenDto tokenDto) {
-		Facebook facebook = new FacebookTemplate(tokenDto.getToken());
+		Facebook facebook = new FacebookTemplate(tokenDto.getValue());
 		String[] data = { "email", "name", "picture", "first_name", "last_name", };
 		User userFacebook = facebook.fetchObject("me", User.class, data);
 		// String
@@ -114,7 +120,7 @@ public class SocialLoginController {
 			tn.dari.spring.entity.User user = new tn.dari.spring.entity.User();
 			user.setEmail(email);
 			// user.setPassword(passwordEncoder.encode("kasdjhfkadhsY776ggTyUU65khaskdjfhYuHAwjñlji"));
-			user.setPassword(encoder.encode("kasdjhfkadhsY776ggTyUU65khaskdjfhYuHAwjñlji"));
+			user.setPassword(encoder.encode("root1234"));
 			user.setUsername(username);
 			user.setAccountVerified(1);
 			user.setPrenom(prenom);
@@ -125,7 +131,7 @@ public class SocialLoginController {
 		JwtLogin jwtLogin = new JwtLogin();
 		log.info("ussssser" + username);
 		jwtLogin.setUsername(username);
-		jwtLogin.setPassword("kasdjhfkadhsY776ggTyUU65khaskdjfhYuHAwjñlji");
+		jwtLogin.setPassword("root1234");
 		jwtLogin.setNom(nom);
 		jwtLogin.setPrenom(prenom);
 		

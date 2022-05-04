@@ -1,16 +1,9 @@
 package tn.dari.spring.control;
 
-import java.net.PasswordAuthentication;
 import java.util.List;
-import java.util.Properties;
-
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,34 +13,25 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.dari.spring.entity.Code;
-import tn.dari.spring.entity.Mail;
-import tn.dari.spring.entity.Message;
 import tn.dari.spring.entity.User;
 import tn.dari.spring.repository.UserRepository;
-import tn.dari.spring.service.EmailService;
 import tn.dari.spring.service.UserService;
-import tn.dari.spring.userFunctions.AccountResponse;
-import tn.dari.spring.userFunctions.ResetPassword;
-import tn.dari.spring.userFunctions.UserCode;
 
-@Slf4j
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
-@CrossOrigin(origins ="*")
+@CrossOrigin(origins = "*")
 public class UserController {
 
 	@Autowired
 	UserService userService;
 	@Autowired
 	UserRepository userRepo;
+
 	@Autowired
-	EmailService emailService;
+	PasswordEncoder encoder;
 
 	// URL : http://localhost:8081/SpringMVC/User/retrieve-All-Users
 	@GetMapping("/allUsers")
@@ -77,9 +61,9 @@ public class UserController {
 	}
 
 	@PutMapping("/lockUser/{id}/{status}")
-	public void lockUser( @PathVariable("id") Long id,@PathVariable("status") boolean status) {
+	public void lockUser(@PathVariable("id") Long id, @PathVariable("status") boolean status) {
 
-		 userService.lockUser(id,status);
+		userService.lockUser(id, status);
 	}
 
 	// URL : http://Localhost:8081/SpringMVC/User/delete-User/
@@ -88,26 +72,16 @@ public class UserController {
 		userService.deleteUser(id);
 	}
 
-	 @PostMapping("/checkEmail")
-	    public AccountResponse resetPasswordEmail(@RequestBody ResetPassword resetPassword){
-	        User user = this.userService.getUserByMail(resetPassword.getEmail());
-	        AccountResponse accountResponse = new AccountResponse();
-	        if(user != null){
-	        	 
+	@PutMapping("/updatepassword/{emailUser}/{password}/{cpassword}")
+	void updatePassword(@PathVariable("emailUser") String emailUser, @PathVariable("password") String newPassword,
+			@PathVariable("cpassword") String confirmPassword) {
+		userService.updatePassword(emailUser, newPassword, confirmPassword);
+	}
 
-	        	String code = UserCode.getCode();
-	            Mail mail = new Mail(resetPassword.getEmail(),code);
-	            emailService.sendCodeByMail(mail);
-	            user.getCode().setCode(code);
-	            this.userService.updateUser(user);
-	            accountResponse.setResult(1);
-	        } else {
-	            accountResponse.setResult(0);
-	        }
-	        return accountResponse;
-	    }
-
-
+	@GetMapping("/sendme/{emailUser}")
+	public void forgotpass(@PathVariable("emailUser") String emailUser) {
+		userService.forgotpass(emailUser);
+	}
 }
 
 @Data

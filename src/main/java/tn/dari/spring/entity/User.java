@@ -41,6 +41,10 @@ public class User {
 	@Email
 	@NotNull
 	private String email;
+	@Column(name = "resettoken")
+	protected String resetPasswordToken;
+	
+	protected String confirmPasswordUser ;
 
 //	@NotBlank
 	@Size(max = 120)
@@ -71,10 +75,7 @@ public class User {
 	private Set<Role> roles = new HashSet<>();
 
 	
-	  @OneToOne(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-	    @JoinColumn(name = "code_id")
-	    private Code code;
-
+	
 	private boolean enabled;
 
 //	public User() {
