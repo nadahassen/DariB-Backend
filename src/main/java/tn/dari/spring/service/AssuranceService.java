@@ -3,7 +3,7 @@ package tn.dari.spring.service;
 import java.util.List;
 
 
-import tn.dari.spring.entities.Assurance;
+import tn.dari.spring.entity.*;
 
 public interface AssuranceService {
 	List<Assurance> retrieveAllAssurance ();

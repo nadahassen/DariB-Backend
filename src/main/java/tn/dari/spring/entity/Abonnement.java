@@ -1,4 +1,4 @@
-package tn.dari.spring.entities;
+package tn.dari.spring.entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;

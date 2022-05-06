@@ -1,4 +1,4 @@
-package tn.dari.spring.controller;
+package tn.dari.spring.control;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import io.swagger.annotations.Api;
-import tn.dari.spring.entities.Abonnement;
+import tn.dari.spring.entity.Abonnement;
 import tn.dari.spring.http.Message;
 import tn.dari.spring.service.AbonnementService;
 @CrossOrigin(origins = "http://localhost:4200")

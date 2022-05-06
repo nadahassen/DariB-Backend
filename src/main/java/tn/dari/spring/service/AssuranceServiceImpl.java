@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.dari.spring.entities.Abonnement;
-import tn.dari.spring.entities.Assurance;
+import tn.dari.spring.entity.Abonnement;
+import tn.dari.spring.entity.Assurance;
 import tn.dari.spring.repository.AbonnementRepository;
 import tn.dari.spring.repository.AssuranceRepository;
 @Service
