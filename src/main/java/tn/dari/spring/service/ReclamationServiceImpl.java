@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import tn.spring.repository.ReclamationRepository;
 import tn.dari.spring.entity.Reclamation;
+import tn.dari.spring.repository.ReclamationRepository;
 
 @Service
 public class ReclamationServiceImpl implements ReclamationService {

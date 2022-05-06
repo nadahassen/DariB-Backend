@@ -1,4 +1,4 @@
-package tn.spring.repository;
+package tn.dari.spring.repository;
 
 import org.springframework.data.repository.CrudRepository;
 

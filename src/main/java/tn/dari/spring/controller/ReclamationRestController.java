@@ -3,6 +3,7 @@ package tn.dari.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,12 +33,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RestController
 @RequestMapping("/reclamation")
 @Api(tags="Gestion des reclamations")
+@CrossOrigin(origins = "http://localhost:4200")
 public class ReclamationRestController {
 	
 	@Autowired
 	ReclamationService reclamationService;
 	
-			//http://localhost:8081/SpringMVC/servlet/retrieve-all-reclamations
+			//http://localhost:8081/DariTn/retrieve-all-reclamations
 			@GetMapping("/retrieve-all-reclamations")	
 			@ResponseBody
 			public List<Reclamation> retrieveAllReclamations(){
@@ -45,7 +47,7 @@ public class ReclamationRestController {
 				return list;
 			}
 			
-			//http://localhost:8081/SpringMVC/servlet/add-reclamation
+			//http://localhost:8081/DariTn/add-reclamation
 			@PostMapping("/add-reclamation")
 			@ResponseBody
 			public Reclamation addReclamation(@RequestBody Reclamation r) {
@@ -53,7 +55,7 @@ public class ReclamationRestController {
 			}
 			
 			
-			//http://localhost:8081/SpringMVC/servlet/update-reclamation/{id}
+			//http://localhost:8081/DariTn/update-reclamation/{id}
 			
 			@PutMapping("/reclamation/update/{id}")      
 		    private Reclamation updateReclamation(@RequestBody Reclamation r, @PathVariable("id")Long id )
@@ -64,14 +66,14 @@ public class ReclamationRestController {
 		    }
 			
 			
-			//http://localhost:8081/SpringMVC/servlet/delete-reclamation/{id}
+			//http://localhost:8081/SpringMVC/DariTn/delete-reclamation/{id}
 			@DeleteMapping("/delete-reclamation/{id}")
 			@ResponseBody
 			public void deleteReclamation(@PathVariable("id") Long id) {
 				reclamationService.retrieveReclamationById(id);
 			}
 			
-			//http://localhost:8081/SpringMVC/servlet/numberOfClaims
+			//http://localhost:8081/DariTn/numberOfClaims
 			@GetMapping("/numberOfClaims")
 		    @ResponseBody
 		    public Long countReclamation() {
@@ -79,7 +81,7 @@ public class ReclamationRestController {
 		    	return countReclamation;
 		    }
 			
-			//http://localhost:8081/SpringMVC/servlet/retrieveReclamation/{id}
+			//http://localhost:8081/DariTn/retrieveReclamation/{id}
 			@GetMapping("/retrieveReclamation/{id}")
 			@ResponseBody
 			public Reclamation retrieveReclamation(@PathVariable("id") Long id) {
