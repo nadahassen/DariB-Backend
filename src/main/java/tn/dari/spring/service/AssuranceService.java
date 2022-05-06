@@ -15,4 +15,8 @@ public interface AssuranceService {
 	Assurance updateAssurance (Assurance  a);
 
 	Assurance  retrieveAssurance (Long id);
+	
+	void affecteAssurAbonn ( Long idAssu  ,  Long idAbon);
+	
+	void desaffecterAssurenceDuAbon( Long idAssu );
 }

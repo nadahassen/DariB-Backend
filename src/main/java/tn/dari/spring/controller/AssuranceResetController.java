@@ -3,10 +3,12 @@ package tn.dari.spring.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,8 +19,9 @@ import io.swagger.annotations.Api;
 import tn.dari.spring.entities.Assurance;
 
 import tn.dari.spring.service.AssuranceService;
-
+@CrossOrigin(origins = "*")
 @RestController
+
 @RequestMapping("/Assurance")
 @Api(tags="Gestion des assurances")
 public class AssuranceResetController {
@@ -27,7 +30,7 @@ public class AssuranceResetController {
 	
 	
 	//URL : http://localhost:8081/DariTn/Assurance/retrieve-all-Assurance
-	@GetMapping("/retrieve-all-Assurance")
+	@GetMapping("/retrieveAllAssurances")
 	public List<Assurance> retrieveAllAssurances() {
 		List<Assurance> list = AssuranceService.retrieveAllAssurance();
 		return list;
@@ -50,5 +53,14 @@ public class AssuranceResetController {
 		public void deleteAssurance(@PathVariable("id") Long id) {
 			AssuranceService.deleteAssurance(id);
 		}
+		
+		  @PutMapping(value = "/affAssAbonn/{idAssu}/{idAbon}")
+		    public void affecteAssurAbonn (@PathVariable("idAssu") Long idAssu ,@PathVariable("idAbon") Long idAbon ){
+			  AssuranceService.affecteAssurAbonn(idAssu , idAbon);
+		   }
+		  @PutMapping(value = "/desaffecterAssurenceDuAbon/{idAssu}")
+		    public void desaffecterAssurenceDuAbon(@PathVariable("idAssu")Long idAssu ){
+			  AssuranceService.desaffecterAssurenceDuAbon(idAssu);
+		    }
 
 }

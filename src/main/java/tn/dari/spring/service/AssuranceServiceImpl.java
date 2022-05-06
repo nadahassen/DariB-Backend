@@ -7,14 +7,15 @@ import org.springframework.stereotype.Service;
 
 import tn.dari.spring.entities.Abonnement;
 import tn.dari.spring.entities.Assurance;
-
+import tn.dari.spring.repository.AbonnementRepository;
 import tn.dari.spring.repository.AssuranceRepository;
 @Service
 public class AssuranceServiceImpl implements AssuranceService{
 	
 	@Autowired
 	 AssuranceRepository   assuranceRepository;
-
+	@Autowired
+     AbonnementRepository abonnementRepository;
 	@Override
 	public List<Assurance> retrieveAllAssurance() {
 		// TODO Auto-generated method stub
@@ -44,6 +45,28 @@ public class AssuranceServiceImpl implements AssuranceService{
 		// TODO Auto-generated method stub
 		Assurance a =assuranceRepository.findById(id).get();
 		return a;
+	}
+
+	@Override
+	public void affecteAssurAbonn( Long idAssu, Long idAbon) {
+		// TODO Auto-generated method stub
+
+		Assurance  as = assuranceRepository.findById(idAssu).get();
+		 Abonnement abon = abonnementRepository.findById(idAbon).get();
+
+		 as.setAssAbon(abon);
+		 assuranceRepository.save(as);
+
+	}
+	
+
+	@Override
+	public void desaffecterAssurenceDuAbon(Long idAssu) {
+		// TODO Auto-generated method stub
+		Assurance as = assuranceRepository.findById(idAssu).orElse(null);
+	        as.setAssAbon(null)  ;
+	        assuranceRepository.save(as);
+		
 	}
 
 }
