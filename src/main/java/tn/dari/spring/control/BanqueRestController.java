@@ -3,6 +3,7 @@ package tn.dari.spring.control;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,13 +22,14 @@ import tn.dari.spring.service.BanqueService;
 @RestController
 @RequestMapping("/banques")
 @Api(tags="gestion des banques")
+@CrossOrigin(origins = "http://localhost:4200")
 public class BanqueRestController {
 	
 
 	@Autowired
 	BanqueService banqueService;
 	
-		//http://localhost:8081/SpringMVC/banque/retrieve-all-banques
+		//http://localhost:8081/DariTn/banque/retrieve-all-banques
 		@GetMapping("/retrieve-all-banques")	
 		@ResponseBody
 		public List<Banque> retrieveAllBanques(){
@@ -36,35 +38,36 @@ public class BanqueRestController {
 		
 		}
 		
-		//http://localhost:8081/SpringMVC/banque/add-bank
+		//http://localhost:8081/DariTn/banque/add-bank
 		@PostMapping("/add-bank")
 		@ResponseBody
 		public Banque addBanque(@RequestBody Banque b) {
 			return banqueService.addBanque(b);
 		}
 		
-		//http://localhost:8081/SpringMVC/banque/update-bank
+		//http://localhost:8081/DariTn/banque/update-bank
 		 @PutMapping("/updateBanque/{id}")      
 		    private Banque updateBank(@RequestBody Banque banque, @PathVariable("id")Long id )
 		    {        
 		    	banqueService.updateBanque(banque, id); 
-		    return banqueService.updateBanque(banque, id);    
+		    //return banqueService.updateBanque(banque, id);  
+		    	return banque;
 		    }
 		
-		//http://localhost:8081/SpringMVC/banque/delete-bank/{id}
+		//http://localhost:8081/DariTn/banque/delete-bank/{id}
 		@DeleteMapping("/delete-bank/{id}")
 		@ResponseBody
 		public void deletebanque(@PathVariable("id") Long id) {
 			banqueService.deleteBanque(id);
 		}
 		
-		//http://localhost:8081/SpringMVC/banque/retrieveBank/{id}
+		//http://localhost:8081/DariTn/banque/retrieveBank/{id}
 		@GetMapping("/retrieveBank/{id}")
 		public Banque retrieveBanque(@PathVariable("id") Long id) {
 			return banqueService.retrieveBanqueById(id);
 		}
 		
-		// http://localhost:8081/SpringMVC/banque/getAllBankByNames
+		// http://localhost:8081/DariTn/banque/getAllBankByNames
 		@GetMapping("/getAllBankByNames")
 		public List<String> getAllBankByNames(){
 			return banqueService.getAllBankByNames();

@@ -40,8 +40,9 @@ public class Banque implements Serializable {
 	@Column(name="nombanque")
 	@NonNull private String nombanque;
 	
-	@Column(name="duree")
-	@NonNull private int duree;
+	/*
+	 * @Column(name="duree") private int duree;
+	 */
 
 	@Column(name="interetBanque")
 	@NonNull private double interetBanque;

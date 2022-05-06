@@ -21,5 +21,7 @@ List<Credit> retrieveAllCredits();
 	//public List<Credit> BestOffre();
 	
 	Credit retrieveCreditById(Long id);
+	
+	public Credit simulation(Credit credit, Long idBanque);
 
 }

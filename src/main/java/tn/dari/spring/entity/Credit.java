@@ -2,16 +2,20 @@ package tn.dari.spring.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -47,20 +51,22 @@ public class Credit implements Serializable {
 	
 	@Column(name="partmensuel")
 	@NonNull private double partmensuel;
-	/*
-	 * @Column(name="interet")
-	 * 
-	 * @NonNull private double interet;
-	 */
+	
+	 @Column(name="interet") 
+	 private double interet;
+	 
 	
 	@Column(name="duree")
 	@NonNull private int duree;
 	
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
 	@JsonIgnore
-    @JsonBackReference 
+	@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 	private Banque banque;
+	
+	@Transient
+	private Long idBank;
 
 	
 	/*

@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import tn.dari.spring.entity.Banque;
 import tn.dari.spring.entity.Credit;
+import tn.dari.spring.repository.BanqueRepository;
 import tn.dari.spring.repository.CreditRepository;
 
 
@@ -15,6 +18,10 @@ public class CreditServiceImpl implements CreditService {
 
 	@Autowired
 	CreditRepository creditRepository;
+	@Autowired
+	BanqueRepository banqueRepository;
+	@Autowired
+	BanqueService banqueService;
 
 	@Override
 	public List<Credit> retrieveAllCredits() {
@@ -48,6 +55,32 @@ public class CreditServiceImpl implements CreditService {
 	public Credit retrieveCreditById(Long id) {
 		Credit credit = creditRepository.findById(id).get();
 		return credit;
+	}
+	
+	@Transactional
+	public Credit simulation(Credit credit, Long idBanque) {
+		Banque banque = banqueRepository.findById(idBanque).orElse(null);
+		float interetBanque;
+		float montant;
+		float interet;
+		Banque nombanque = credit.getBanque();
+		//interetBanque= banqueService.getBankByName(nombanque).getInteret();
+		//interetBanque= banqueService.getBankByName(nombanque).getInteret();
+		interet = (float) banque.getInteretBanque();
+		int periode;
+		int nb_versement = 0;
+		float cout_total = 0;
+		float mensualite =0;
+		montant = credit.getMontant();
+		periode = credit.getDuree();
+		cout_total = montant+((montant*interet)/100);
+		mensualite = cout_total/periode;
+		credit.setBanque(banque);
+		credit.setPartmensuel(mensualite);
+		credit.setDuree(periode);
+		credit.setInteret(interet);
+		return creditRepository.save(credit);
+		
 	}
 	
 	

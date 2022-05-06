@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import tn.dari.spring.entity.Credit;
 import tn.dari.spring.entity.Banque;
 import tn.dari.spring.repository.BanqueRepository;
 
@@ -53,6 +54,16 @@ public class BanqueServiceImpl implements BanqueService  {
 	public List<String> getAllBankByNames() {
 		
 		return banqueRepository.getAllBankByNames();
+	}
+	
+	@Override
+	public Banque getBankByName(String nombanque) {
+		return banqueRepository.findByNombanque(nombanque);
+	}
+
+	@Override
+	public Credit getBankByName(Banque nombanque) {
+		return banqueRepository.findByNombanque(nombanque);
 	}
 
 
